@@ -63,14 +63,14 @@ function checkWin() {
 		document.querySelector("#wins").innerHTML = wins;
 		startGame();
 	} else if (guessesLeft === 0) {
-		losses --;
+		losses ++;
 		document.querySelector("#losses").innerHTML = losses;
 		startGame();
 	}
 }
 
 //Detects which key is pressed
-document.onkeyup = function(event) {
+document.onkeyup = function (event) {
 
 	//turns all inputed letters to lower case
 	var letterGuessed = String.fromCharCode(event.keycode).toLowerCase();
