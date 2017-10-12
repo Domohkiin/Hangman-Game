@@ -37,6 +37,15 @@ guessesLeft = word.length + 5;
 
 document.querySelector("#current-word").innerHTML = correctGuesses.join(' ');
 }
+
+function reset() {
+	guessedLetters = [];
+	correctGuesses = [];
+	document.querySelector("#current-word").innerHTML = correctGuesses.join(' ');
+	document.querySelector("#guesses-so-far").innerHTML = guessedLetters.join(', ');
+	startGame();
+}
+
 //updates the total guesses var
 function updateGuesses(letter){
 	guessesLeft --;
@@ -61,10 +70,12 @@ function checkWin() {
 	if (correctGuesses.indexOf('_') === -1) {
 		wins++;
 		document.querySelector("#wins").innerHTML = wins;
+		reset();
 		startGame();
 	} else if (guessesLeft === 0) {
 		losses ++;
 		document.querySelector("#losses").innerHTML = losses;
+		reset();
 		startGame();
 	}
 }
