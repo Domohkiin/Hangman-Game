@@ -1,4 +1,4 @@
-//Array of pets 
+///Array of pets 
 var pets = 
 ["pineapple", "snail", "narwhal", "lobster", "dragon", "dilophosaurus", 
 "rock", "bird", "lizard", "cat", "dog"]
@@ -25,17 +25,18 @@ var guessesLeft = [];
 //puts them on the page
 
 function startGame() {
-//randomly selects a word from the pets array
-word = pets[Math.floor(Math.random() * pets.length)];
+	//randomly selects a word from the pets array
+	word = pets[Math.floor(Math.random() * pets.length)];
 
-for (var i = 0; i < word.length; i++) {
-	correctGuesses.push('_');
+	for (var i = 0; i < word.length; i++) {
+		correctGuesses.push('_');
 
-}
+	}
 
-guessesLeft = word.length + 5;
+	guessesLeft = word.length + 5;
 
-document.querySelector("#current-word").innerHTML = correctGuesses.join(' ');
+	document.querySelector("#current-word").innerHTML = correctGuesses.join(' ');
+	document.querySelector("#secret").innerHTML = word;
 }
 
 function reset() {
@@ -71,12 +72,10 @@ function checkWin() {
 		wins++;
 		document.querySelector("#wins").innerHTML = wins;
 		reset();
-		startGame();
 	} else if (guessesLeft === 0) {
 		losses ++;
 		document.querySelector("#losses").innerHTML = losses;
 		reset();
-		startGame();
 	}
 }
 
@@ -84,7 +83,8 @@ function checkWin() {
 document.onkeyup = function (event) {
 
 	//turns all inputed letters to lower case
-	var letterGuessed = String.fromCharCode(event.keycode).toLowerCase();
+	var letterGuessed = event.key;
+
 
 	//Reduces the guesses left by one everytime a key is pressed 
 	updateGuesses(letterGuessed);
