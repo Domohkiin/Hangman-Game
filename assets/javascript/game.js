@@ -8,37 +8,34 @@ var guessedLetters = [];
 
 var correctGuesses = [];
 
-//word to guess
-var wordToGuess = null;
-
 //Win to loss counter
 var wins = 0;
 var losses = 0;
 
-//Number of guesses you start with
+//number of guesses you have left
 var guessesLeft = [];
-
-//separates the selected word and divides it into individual letters
-//var letters = word.split("");
-
-//generates underscores equal to the length of the selected word and
-//puts them on the page
 
 function startGame() {
 	//randomly selects a word from the pets array
 	word = pets[Math.floor(Math.random() * pets.length)];
 
+	//displays underscores in place of the selected word
 	for (var i = 0; i < word.length; i++) {
 		correctGuesses.push('_');
 
 	}
-
+	//sets the initial guess count to 5 more than the length of the word
 	guessesLeft = word.length + 5;
 
+	//prints the underscores to the page
 	document.querySelector("#current-word").innerHTML = correctGuesses.join(' ');
-	document.querySelector("#secret").innerHTML = word;
+
+	//shows the word for debugging
+	//document.querySelector("#secret").innerHTML = word;
+
 }
 
+//resets the values of the vars and starts a new game
 function reset() {
 	guessedLetters = [];
 	correctGuesses = [];
@@ -47,16 +44,17 @@ function reset() {
 	startGame();
 }
 
-//updates the total guesses var
-function updateGuesses(letter){
-	guessesLeft --;
-	document.querySelector("#guesses-left").innerHTML = guessesLeft;
 
+function updateGuesses(letter){
+	//checks if the letter pressed is in the word
 	if (word.indexOf(letter) === -1) {
+		//decrements the guesses left if the guess is wrong
+		guessesLeft --;
 		guessedLetters.push(letter);
 		document.querySelector("#guesses-so-far").innerHTML = guessedLetters.join(', ');
+		document.querySelector("#guesses-left").innerHTML = guessesLeft;
 	} else {
-		
+		//if it is in the word it will replace the underscore(s) in the proper place
 		for (var i = 0; i< word.length; i++) {
 			if (word[i] === letter) {
 				correctGuesses[i] = letter;
@@ -66,30 +64,49 @@ function updateGuesses(letter){
 	}
 
 }
-
+//checks if the user has won
 function checkWin() {
+	//if no underscores are found in the array
 	if (correctGuesses.indexOf('_') === -1) {
+		//wins increases by 1
 		wins++;
+		//and win count is displayed on the page
 		document.querySelector("#wins").innerHTML = wins;
-		reset();
+		//runs the show word function 
+		showWord();
+		//reset();
+
+		//if the player runs out of guesses 
 	} else if (guessesLeft === 0) {
+		//losses increase by 1
 		losses ++;
+		//and are shown on the page
 		document.querySelector("#losses").innerHTML = losses;
+		//reset function runs
 		reset();
 	}
 }
+//displays the correct word after it is fully guessed
+function showWord() {
+	//empties the correctGuesses var
+	correctGuesses = [];
+	//displays the word 
+	document.querySelector("#current-word").innerHTML = word + " is correct!"
+	document.querySelector("#Press-Any-Key").innerHTML = "Press any key to continue!";
+	
+		reset();
+	}
+
 
 //Detects which key is pressed
 document.onkeyup = function (event) {
 
-	//turns all inputed letters to lower case
+
 	var letterGuessed = event.key;
 
-
-	//Reduces the guesses left by one everytime a key is pressed 
 	updateGuesses(letterGuessed);
 	checkWin();
 	
 };
-
+//runs the startGame function
 startGame();
