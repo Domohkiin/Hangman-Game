@@ -1,8 +1,6 @@
 body {
 	background: url("../images/background.png") no-repeat center center fixed;
+	background-color: white;
 	text-align: center;
+	color: red !important;
 }
-
-
-
-#dog-tag
